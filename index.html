@@ -3,10 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>YouTube 3 Video Player</title>
+<title>YouTube 20 Video Player</title>
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
   body {
     background: #0f0f0f;
     color: #e8e8e8;
@@ -14,37 +13,17 @@
     min-height: 100vh;
     padding: 2rem 1.5rem;
   }
-
-  header {
-    text-align: center;
-    margin-bottom: 2.5rem;
-  }
-
-  header h1 {
-    font-size: 1.6rem;
-    font-weight: 600;
-    letter-spacing: -0.5px;
-    color: #fff;
-  }
-
-  header h1 span {
-    color: #ff4444;
-  }
-
-  header p {
-    margin-top: 6px;
-    font-size: 0.875rem;
-    color: #888;
-  }
-
+  header { text-align: center; margin-bottom: 2.5rem; }
+  header h1 { font-size: 1.6rem; font-weight: 600; color: #fff; }
+  header h1 span { color: #ff4444; }
+  header p { margin-top: 6px; font-size: 0.875rem; color: #888; }
   .grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    gap: 1.5rem;
-    max-width: 1280px;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.25rem;
+    max-width: 1400px;
     margin: 0 auto;
   }
-
   .card {
     background: #1a1a1a;
     border-radius: 12px;
@@ -53,88 +32,65 @@
     display: flex;
     flex-direction: column;
   }
-
   .card-header {
-    padding: 14px 16px 10px;
+    padding: 12px 14px 10px;
     border-bottom: 1px solid #2a2a2a;
     display: flex;
     align-items: center;
     gap: 10px;
   }
-
   .num {
     background: #ff4444;
     color: #fff;
-    font-size: 12px;
+    font-size: 11px;
     font-weight: 700;
-    width: 24px;
-    height: 24px;
+    width: 22px;
+    height: 22px;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
   }
-
-  .card-header span {
-    font-size: 13px;
-    font-weight: 500;
-    color: #ccc;
-  }
-
-  .input-row {
-    display: flex;
-    gap: 8px;
-    padding: 12px 16px;
-  }
-
+  .card-header span { font-size: 13px; font-weight: 500; color: #bbb; }
+  .input-row { display: flex; gap: 7px; padding: 10px 12px; }
   .input-row input {
     flex: 1;
     background: #111;
     border: 1px solid #333;
-    border-radius: 8px;
+    border-radius: 7px;
     color: #e8e8e8;
-    font-size: 13px;
-    padding: 8px 12px;
+    font-size: 12px;
+    padding: 7px 10px;
     outline: none;
     transition: border-color 0.2s;
+    min-width: 0;
   }
-
   .input-row input::placeholder { color: #555; }
   .input-row input:focus { border-color: #ff4444; }
-
   .input-row button {
     background: #ff4444;
     color: #fff;
     border: none;
-    border-radius: 8px;
-    padding: 8px 14px;
-    font-size: 13px;
+    border-radius: 7px;
+    padding: 7px 12px;
+    font-size: 12px;
     font-weight: 600;
     cursor: pointer;
     transition: background 0.2s, transform 0.1s;
     white-space: nowrap;
   }
-
   .input-row button:hover { background: #e03030; }
   .input-row button:active { transform: scale(0.97); }
-
   .player-wrap {
     position: relative;
     aspect-ratio: 16 / 9;
     background: #000;
-    margin: 0 16px 16px;
+    margin: 0 12px 12px;
     border-radius: 8px;
     overflow: hidden;
   }
-
-  .player-wrap iframe {
-    width: 100%;
-    height: 100%;
-    border: none;
-    display: block;
-  }
-
+  .player-wrap iframe { width: 100%; height: 100%; border: none; display: block; }
   .placeholder {
     position: absolute;
     inset: 0;
@@ -142,121 +98,73 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 10px;
-    color: #444;
+    gap: 8px;
     background: #111;
     border-radius: 8px;
   }
-
-  .placeholder svg {
-    width: 44px;
-    height: 44px;
-    opacity: 0.5;
-  }
-
-  .placeholder p {
-    font-size: 12px;
-    color: #555;
-    text-align: center;
-    padding: 0 1rem;
-    line-height: 1.5;
-  }
-
-  .error-msg {
-    font-size: 12px;
-    color: #ff6b6b;
-    padding: 0 16px 10px;
-    display: none;
-  }
-
-  footer {
-    text-align: center;
-    margin-top: 2.5rem;
-    font-size: 12px;
-    color: #444;
-  }
-
-  @media (max-width: 600px) {
+  .placeholder svg { width: 36px; height: 36px; opacity: 0.4; }
+  .placeholder p { font-size: 11px; color: #555; text-align: center; padding: 0 0.75rem; line-height: 1.5; }
+  .error-msg { font-size: 11px; color: #ff6b6b; padding: 0 12px 8px; display: none; }
+  footer { text-align: center; margin-top: 2.5rem; font-size: 12px; color: #444; }
+  @media (max-width: 640px) {
     .grid { grid-template-columns: 1fr; }
-    body { padding: 1.25rem 1rem; }
+    body { padding: 1rem 0.75rem; }
   }
 </style>
 </head>
 <body>
 
 <header>
-  <h1>▶ YouTube <span>3</span> Player</h1>
-  <p>তিনটা লিংক দাও, তিনটা ভিডিও একসাথে দেখো</p>
+  <h1>▶ YouTube <span>20</span> Player</h1>
+  <p>২০টা লিংক দাও, ২০টা ভিডিও একসাথে দেখো</p>
 </header>
 
-<div class="grid">
-  <div class="card" id="card-1">
-    <div class="card-header">
-      <div class="num">1</div>
-      <span>প্রথম ভিডিও</span>
-    </div>
-    <div class="input-row">
-      <input type="text" id="url-1" placeholder="YouTube লিংক বা Video ID..." />
-      <button onclick="loadVideo(1)">চালাও</button>
-    </div>
-    <div class="error-msg" id="err-1">সঠিক YouTube লিংক দাও।</div>
-    <div class="player-wrap">
-      <div class="placeholder" id="ph-1">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-          <circle cx="12" cy="12" r="10"/><polygon points="10,8 16,12 10,16" fill="currentColor" stroke="none"/>
-        </svg>
-        <p>লিংক দিয়ে চালাও</p>
-      </div>
-      <iframe id="frame-1" src="" allow="autoplay; encrypted-media" allowfullscreen style="display:none;"></iframe>
-    </div>
-  </div>
-
-  <div class="card" id="card-2">
-    <div class="card-header">
-      <div class="num">2</div>
-      <span>দ্বিতীয় ভিডিও</span>
-    </div>
-    <div class="input-row">
-      <input type="text" id="url-2" placeholder="YouTube লিংক বা Video ID..." />
-      <button onclick="loadVideo(2)">চালাও</button>
-    </div>
-    <div class="error-msg" id="err-2">সঠিক YouTube লিংক দাও।</div>
-    <div class="player-wrap">
-      <div class="placeholder" id="ph-2">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-          <circle cx="12" cy="12" r="10"/><polygon points="10,8 16,12 10,16" fill="currentColor" stroke="none"/>
-        </svg>
-        <p>লিংক দিয়ে চালাও</p>
-      </div>
-      <iframe id="frame-2" src="" allow="autoplay; encrypted-media" allowfullscreen style="display:none;"></iframe>
-    </div>
-  </div>
-
-  <div class="card" id="card-3">
-    <div class="card-header">
-      <div class="num">3</div>
-      <span>তৃতীয় ভিডিও</span>
-    </div>
-    <div class="input-row">
-      <input type="text" id="url-3" placeholder="YouTube লিংক বা Video ID..." />
-      <button onclick="loadVideo(3)">চালাও</button>
-    </div>
-    <div class="error-msg" id="err-3">সঠিক YouTube লিংক দাও।</div>
-    <div class="player-wrap">
-      <div class="placeholder" id="ph-3">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-          <circle cx="12" cy="12" r="10"/><polygon points="10,8 16,12 10,16" fill="currentColor" stroke="none"/>
-        </svg>
-        <p>লিংক দিয়ে চালাও</p>
-      </div>
-      <iframe id="frame-3" src="" allow="autoplay; encrypted-media" allowfullscreen style="display:none;"></iframe>
-    </div>
-  </div>
-</div>
+<div class="grid" id="grid"></div>
 
 <footer>YouTube iframe Embed — কোনো API key লাগে না</footer>
 
 <script>
+const labels = [
+  'প্রথম','দ্বিতীয়','তৃতীয়','চতুর্থ','পঞ্চম',
+  'ষষ্ঠ','সপ্তম','অষ্টম','নবম','দশম',
+  'একাদশ','দ্বাদশ','ত্রয়োদশ','চতুর্দশ','পঞ্চদশ',
+  'ষোড়শ','সপ্তদশ','অষ্টাদশ','উনবিংশ','বিংশ'
+];
+
+const grid = document.getElementById('grid');
+
+for (let i = 1; i <= 20; i++) {
+  const card = document.createElement('div');
+  card.className = 'card';
+  card.innerHTML = `
+    <div class="card-header">
+      <div class="num">${i}</div>
+      <span>${labels[i-1]} ভিডিও</span>
+    </div>
+    <div class="input-row">
+      <input type="text" id="url-${i}" placeholder="YouTube লিংক বা Video ID..." />
+      <button onclick="loadVideo(${i})">চালাও</button>
+    </div>
+    <div class="error-msg" id="err-${i}">সঠিক YouTube লিংক দাও।</div>
+    <div class="player-wrap">
+      <div class="placeholder" id="ph-${i}">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <circle cx="12" cy="12" r="10"/>
+          <polygon points="10,8 16,12 10,16" fill="currentColor" stroke="none"/>
+        </svg>
+        <p>লিংক দিয়ে চালাও</p>
+      </div>
+      <iframe id="frame-${i}" src="" allow="autoplay; encrypted-media" allowfullscreen style="display:none;"></iframe>
+    </div>`;
+  grid.appendChild(card);
+
+  document.getElementById('url-' + i) && setTimeout(() => {
+    document.getElementById('url-' + i).addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') loadVideo(i);
+    });
+  }, 0);
+}
+
 function extractId(input) {
   input = input.trim();
   const patterns = [
@@ -276,22 +184,21 @@ function loadVideo(n) {
   const frame = document.getElementById('frame-' + n);
   const ph = document.getElementById('ph-' + n);
   const id = extractId(input);
-
-  if (!id) {
-    errEl.style.display = 'block';
-    return;
-  }
-
+  if (!id) { errEl.style.display = 'block'; return; }
   errEl.style.display = 'none';
   frame.src = 'https://www.youtube.com/embed/' + id + '?autoplay=1';
   frame.style.display = 'block';
   ph.style.display = 'none';
 }
 
-[1, 2, 3].forEach(n => {
-  document.getElementById('url-' + n).addEventListener('keydown', function(e) {
-    if (e.key === 'Enter') loadVideo(n);
-  });
+// Add enter key listeners after DOM is ready
+document.addEventListener('DOMContentLoaded', () => {
+  for (let i = 1; i <= 20; i++) {
+    const el = document.getElementById('url-' + i);
+    if (el) el.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') loadVideo(i);
+    });
+  }
 });
 </script>
 
